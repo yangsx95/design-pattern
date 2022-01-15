@@ -1,0 +1,145 @@
+@startuml
+
+'类图（Class Diagram）:
+'类图是面向对象系统建模中最常用和最重要的图，是定义其它图的基础。
+'类图主要是用来显示系统中的类、接口以及它们之间的静态结构和关系的一种静态模型。
+
+''''''''''''''''''''''''''''''定义类元素
+class Food
+
+'类图拥有三个基本属性:类名、属性、方法
+'{method}定义方法，{field}定义属性，都可以省略
+'定义权限修饰符： -private #protected ~packagePrivate +public
+'定义静态以及抽象成员 {static}下划线 {abstract}斜体
+'给成员分类并添加title ..title.. __title__
+'也可以使用一些不含title的分割 比如 .. __ == 等
+class Animals <<Serializable>>{
+    +{static}{field}enum type(种类，Enum)
+    -{abstract}String name
+    -{abstract}{field}String : isFriendly(是否友好)
+    __method__
+    ..setter/getter..
+    +name()
+    +isFriendly()
+    ..other..
+    +{abstract}{method} eat(Food)
+}
+'会飞的
+interface Flyable {
+    time
+    fly()
+}
+'会游的
+interface Swimming {
+    swim()
+}
+'''''''''''''''''''''''''''''''
+
+
+''''''''''''''''''''''''''''''' 实现（Realization）
+'''''''''''plantUML表示
+Flyable <|.. Bird
+Swimming <|.. Fish
+'''''''''''''''''''''''''''''''
+
+
+
+'''''''''''''''''''''''''''''' 泛化(Generalization)
+'表示is-a的关系，是对象之间耦合度最高的关系，即继承
+'''''''''''plantUML表示
+'单条-代表水平位置
+'双条-代表垂直位置
+'多条-代表垂直位置间隔增大
+Animals <|- Bird
+Animals <|-- Dog
+Animals <|-- Fish
+Animals <|---- Bug
+''''''''''''''''''''''''''''''
+
+
+
+''''''''''''''''''''''''''''''依赖(Dependency)
+'对象之间最弱的一种关联方式，是临时性的关联。
+'代码中一般指由局部变量、函数参数、返回值建立的对于其他对象的调用关系。
+'一个类调用被依赖类中的某些方法而得以完成这个类的一些职责。
+'比如动物吃食物(eat(food))，动物就要依赖食物
+''''''''''''plantUML表示
+Animals ..> Food
+''''''''''''''''''''''''''''''
+
+
+
+'''''''''''''''''''''''''''''''关联(Association)
+'关联关系是一种引用关系，比如订单和订单详情，就是一种一对多的关联关系
+'关联关系分为一般关联、聚合关联、组合关联
+''''''''''''plantUML表示
+'one2one双向关联 一个husband对应一个wife
+Husband"1" <-> "1" Wife
+'one2many 一个丈夫妻子对应多个子女
+Husband"1" --> "many"Child
+Wife"1" --> "many"Child
+'many2many 多个孩子对应多个玩具
+Child"many" --> "many"Toy
+'''''''''''''''''''''''''''''''
+
+
+''''''''''''''''''''''''''''''''依赖和关联的区别
+/'
+依赖的定义：
+对于两个相对独立的对象，当一个对象负责构造另一个对象的实例，或者依赖另一个对象的服务时，这两个对象之间主要体现为依赖关系。
+Java：类A当中使用了类B，其中类B是作为类A的方法参数、方法中的局部变量、或者静态方法调用。
+
+关联的定义：
+对于两个相对独立的对象，当一个对象的实例与另一个对象的一些特定实例存在固定的对应关系时，这两个对象之间为关联关系
+在java中，单向关联表现为：类A当中使用了类B，其中类B是作为类A的成员变量。
+    双向关联表现为：类A当中使用了类B作为成员变量；同时类B中也使用了类A作为成员变量。
+'/
+
+
+''''''''''''''''''''''''''''''Aggregation 聚合关系
+'表示has-a的关系，是一种不稳定的包含关系。
+'较强于一般关联,有整体与局部的关系,并且没有了整体,局部也可单独存在。
+'如公司和员工的关系，公司包含员工，但如果公司倒闭，员工依然可以换公司。
+''''''''''''plantUML使用，冒号代表两个类之间的关系的label
+Company o-- Stuff:聚合
+Department o-- Stuff
+'''''''''''''''''''''''''''''''
+
+
+
+''''''''''''''''''''''''''''''Composition 组成关系
+'表示contains-a的关系，是一种强烈的包含关系。组合类负责被组合类的生命周期。
+'是一种更强的聚合关系。部分不能脱离整体存在。
+'如公司和部门的关系，没有了公司，部门也不能存在了；
+'调查问卷中问题和选项的关系；订单和订单选项的关系。
+''''''''''''plantUML使用
+Company *- Department  : 拥有 >
+''''''''''''''''''''''''''''''
+
+
+
+'''''''''''''''''''''''''''''''Notes，添加备注
+''定义notes
+note "公司" as n1
+''使用notes
+Company . n1
+
+''定义复杂notes
+note "<b>加粗</b>" as n2
+note "<i>斜体</i>" as n3
+note "<u>下划线</u>" as n4
+note "<del>删除线</del>" as n5
+note "<font color=red>字体颜色</font>" as n6
+note "<color:red>字体颜色</color>" as n7
+note "<size:15>字体大小</size>" as n8
+note "<img src=https://www.baidu.com/img/bd_logo1.png?where=super>" as n9
+
+''整理note，不要看
+n2- n3
+n3 - n4
+n4 - n5
+n5 - n6
+n2 -- n7
+n3 -- n8
+n4 -- n9
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+
+interface Vehicle {
+    +go()
+}
+
+class Car {
+    +go()
+}
+
+class Plane {
+    +go()
+}
+
+interface VehicleFactory {
+    +create()
+}
+class CarFactory {
+    +create()
+}
+class PlaneFactory {
+    +create()
+}
+
+class Client
+
+Client .right.> VehicleFactory
+Vehicle <|.. Car
+Vehicle <|.. Plane
+VehicleFactory <|.. CarFactory
+VehicleFactory <|.. PlaneFactory
+CarFactory ..right..> Car
+PlaneFactory ..right..> Plane
+
+@enduml

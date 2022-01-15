@@ -1,4 +1,4 @@
-package com.yangsx95.proxy.dynamic;
+package com.yangsx95.proxy.dynamic.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -17,6 +17,7 @@ public class SubjectHandler implements InvocationHandler {
         System.out.println("----即将调用方法" + method.getName());
         method.invoke(subject, args);
         System.out.println("----调用方法" + method.getName() + "结束");
+        System.out.println(proxy);
         return null;
     }
 }
