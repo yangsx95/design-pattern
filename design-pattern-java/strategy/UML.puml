@@ -1,0 +1,18 @@
+@startuml
+
+class Client
+interface Strategy{
+    +execute()
+}
+class ConcreteStrategy1{
+    +execute()
+}
+class ConcreteStrategy2{
+    +execute()
+}
+
+Strategy <|-- ConcreteStrategy1
+Strategy <|-- ConcreteStrategy2
+Client *- Comparator
+
+@enduml
