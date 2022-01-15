@@ -1,0 +1,28 @@
+@startuml
+
+class Client
+interface Subject {
+    +request()
+}
+note right : 委托类的功能接口
+
+class RealSubject {
+    +request()
+}
+note right : 委托类
+
+class Proxy {
+    +request()
+}
+note left of Proxy
+    代理类,代理类(Proxy)要代理
+    委托类(RealSubject)的所有功能，
+    就要实现统一功能接口(Subject)
+end note
+
+Client -> Subject
+Subject <|.. RealSubject
+Subject <|.. Proxy
+Proxy->RealSubject
+
+@enduml
