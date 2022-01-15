@@ -11,6 +11,7 @@
     <modules>
         <module>observer</module>
         <module>proxy</module>
+        <module>singleton</module>
     </modules>
 
     <properties>
